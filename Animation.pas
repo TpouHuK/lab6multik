@@ -222,15 +222,16 @@ end;
 
 constructor THuman.DefaultTPose;
 const
-  DEFAULT_X = 400;
-  DEFAULT_Y = 800;
+  DEFAULT_X = 200;
+  DEFAULT_Y = 400;
 
-  cHEAD_SIZE = 20;
+  cHEAD_SIZE = 10;
 
-  cNECK_LEN = 30;
-  cTORSO_LEN =90;
-  cARMS_LEN = 60;
-  cLEGS_LEN = 60;
+  cNECK_LEN = 20;
+  cTORSO_LEN =60;
+  cARMS_LEN = 30;
+  cLEGS_LEN = 30;
+
 
   angle_UP = -90;
 
