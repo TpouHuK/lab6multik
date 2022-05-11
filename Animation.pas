@@ -1,7 +1,7 @@
 unit Animation;
 
 interface
-
+{HEllo git}
 uses
   Vcl.Graphics, System.Types;
 // Vcl.Graphics -> TCanvas
