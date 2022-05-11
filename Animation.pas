@@ -224,7 +224,7 @@ constructor THuman.DefaultTPose;
 const
 
   DEFAULT_X = 200;
-  DEFAULT_Y = 400;
+  DEFAULT_Y = 300;
 
   cHEAD_SIZE = 10;
 
