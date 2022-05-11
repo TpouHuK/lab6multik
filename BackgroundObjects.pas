@@ -42,10 +42,10 @@ implementation
 
 constructor Tdrevo.Create;
 const
-  DEFAULT_X = 1600;
-  DEFAULT_Y = 750;
+  DEFAULT_X = 900;
+  DEFAULT_Y = 450;
 begin
-  Transform := TTransform.Create(TPos.Create(DEFAULT_X, DEFAULT_Y), deg2rad(0), 2);
+  Transform := TTransform.Create(TPos.Create(DEFAULT_X, DEFAULT_Y), deg2rad(0), 1);
 end;
 
 
@@ -121,8 +121,8 @@ begin
     DrawSnow(Canvas);
       if y<0 then
       begin
-          x:=1600;
-          y:=750;
+          x:=800;
+          y:=400;
       end;
     end;
     end;
@@ -131,9 +131,9 @@ end;
 constructor THouse.Create;
 const
   DEFAULT_X = 0;
-  DEFAULT_Y = 400;
+  DEFAULT_Y = 200;
 begin
-  Transform := TTransform.Create(TPos.Create(DEFAULT_X, DEFAULT_Y), 1, deg2rad(0));
+  Transform := TTransform.Create(TPos.Create(DEFAULT_X, DEFAULT_Y),deg2rad(0),1);
 end;
 
 procedure THouse.Draw(Canvas: TCanvas);
@@ -142,8 +142,8 @@ var
   i: integer;
 const
   BrownColor = $3F85CD;
-  H = 900;
-  W = 1200;
+  H = 600;
+  W = 800;
 
   HouseLenX = 3 * W / 8;
   HouseLeny = H / 3;
@@ -230,15 +230,15 @@ end;
 
 constructor TDoor.Create;
 const
-  DEFAULT_X = 500;
-  DEFAULT_Y = 420;
+  DEFAULT_X = 335;
+  DEFAULT_Y = 215;
   DOOR_LENX = 75;
   DOOR_LENY = 150;
   DOOR_START_ANGLE = 45;
 
 
 begin
-  Transform.Create(TPos.Create(DEFAULT_X, DEFAULT_Y), deg2rad(0), 1.5);
+  Transform.Create(TPos.Create(DEFAULT_X, DEFAULT_Y), deg2rad(0), 1);
   lenX := DOOR_LENX*Transform.scale;
   lenY := DOOR_LENY*Transform.scale;
   shadowX:=DEFAULT_X;
@@ -305,8 +305,8 @@ end;
 
 constructor THill.Create;
 Const
-  FormSizeW = 1500;
-  FormSizeH = 1100;
+  FormSizeW = 800;
+  FormSizeH = 600;
 begin
     //x:=FormSizeW;
     //y:=FormSizeW;
@@ -330,8 +330,8 @@ end;
 
 Constructor TStars.Create;
 Const
-     FormSizeW = 1400;
-     FormSizeH = 1100;
+     FormSizeW = 800;
+     FormSizeH = 600;
 Var
   i: integer;
 begin
@@ -384,11 +384,11 @@ end;
 
 Constructor TMoon.Create;
 Const
-     DEFAULT_X = 1200;
-     DEFAULT_Y = 200;
+     DEFAULT_X = 800-100;
+     DEFAULT_Y = 600-525;
 begin
 
-  Transform := TTransform.Create(TPos.Create(DEFAULT_X, DEFAULT_Y), deg2rad(0), 1.5);
+  Transform := TTransform.Create(TPos.Create(DEFAULT_X, DEFAULT_Y), deg2rad(0), 1);
 
 end;
 
