@@ -1,7 +1,7 @@
 unit Animation;
 
 interface
-{HEllo git}
+
 uses
   Vcl.Graphics, System.Types;
 // Vcl.Graphics -> TCanvas
@@ -222,6 +222,7 @@ end;
 
 constructor THuman.DefaultTPose;
 const
+
   DEFAULT_X = 200;
   DEFAULT_Y = 400;
 
@@ -234,28 +235,35 @@ const
 
 
   angle_UP = -90;
-
 begin
   Transform := TTransform.Create(TPos.Create(DEFAULT_X, DEFAULT_Y));
   head_size := cHEAD_SIZE;
 
   Torso := TLimb.Create(Deg2Rad(-90), cTORSO_LEN);
   Neck := TLimb.Create(Deg2Rad(-90), cNECK_LEN);
+
   LUpperarm := TLimb.Create(Deg2Rad(120), cARMS_LEN);
-	@@ -251,76 +117,138 @@ constructor THuman.DefaultTPose;
+  RUpperarm := TLimb.Create(Deg2Rad(60), cARMS_LEN);
+  LForearm := TLimb.Create(Deg2Rad(90), cARMS_LEN);
+  RForearm := TLimb.Create(Deg2Rad(90), cARMS_LEN);
+
+  LThigh := TLimb.Create(Deg2Rad(70), cLEGS_LEN);
   LShin := TLimb.Create(Deg2Rad(90), cLEGS_LEN);
   RThigh := TLimb.Create(Deg2Rad(110), cLEGS_LEN);
   RShin := TLimb.Create(Deg2Rad(90), cLEGS_LEN);
 end;
+
 procedure THuman.Interpolate(const First, Second: THuman; t: real);
 var
   I: Integer;
 begin
   inherited Interpolate(First, Second, t);
   head_size := lerp(First.head_size, Second.head_size, t);
+
   for I := Low(Limbs) to High(Limbs) do
     Limbs[I].Interpolate(First.Limbs[I], Second.Limbs[I], t);
 end;
+
 procedure THuman.Update;
 var
   tp: TPos;
@@ -264,6 +272,7 @@ begin
   begin
     Torso.aPos := Transform.pos + ScaleRotate(Torso.dPos);
     Neck.aPos := Torso.aPos + ScaleRotate(Neck.dPos);
+
     LUpperarm.aPos := Torso.aPos + ScaleRotate(LUpperarm.dPos);
     RUpperarm.aPos := Torso.aPos + ScaleRotate(RUpperarm.dPos);
 
@@ -279,3 +288,39 @@ begin
 end;
 
 procedure THuman.Draw(Canvas: TCanvas);
+var
+  LastPos: TPoint;
+  tp: TPos;
+
+begin
+  with Canvas do
+  begin
+    Pen.Width:=3;
+    MoveTo(round(Transform.pos.x), round(Transform.pos.y));
+
+    LineTo(round(Torso.aPos.x), round(Torso.aPos.y)); // Torso
+    LineTo(round(Neck.aPos.x), round(Neck.aPos.y)); // Neck
+    Brush.Color:=clWhite;
+    Circle(Canvas, round(Neck.aPos.x), round(Neck.aPos.y),
+      round(head_size * Transform.scale)); // Head
+
+    MoveTo(round(Torso.aPos.x), round(Torso.aPos.y)); // Back to shoulders
+    LineTo(round(LUpperarm.aPos.x), round(LUpperarm.aPos.y)); // Left arm
+    LineTo(round(LForearm.aPos.x), round(LForearm.aPos.y));
+
+    MoveTo(round(Torso.aPos.x), round(Torso.aPos.y)); // Back to shoulders
+    LineTo(round(RUpperarm.aPos.x), round(RUpperarm.aPos.y)); // Right arm
+    LineTo(round(RForearm.aPos.x), round(RForearm.aPos.y));
+
+    MoveTo(round(Transform.pos.x), round(Transform.pos.y)); // Back to origin
+    LineTo(round(LThigh.aPos.x), round(LThigh.aPos.y)); // Left leg
+    LineTo(round(LShin.aPos.x), round(LShin.aPos.y));
+
+    MoveTo(round(Transform.pos.x), round(Transform.pos.y)); // Back to origin
+    LineTo(round(RThigh.aPos.x), round(RThigh.aPos.y)); // Right leg
+    LineTo(round(RShin.aPos.x), round(RShin.aPos.y));
+    Pen.Width:=1;
+  end;
+end;
+
+end.
