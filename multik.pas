@@ -42,6 +42,7 @@ var
   time, dSpeed: Real;
   dClose:boolean;
   force: Real;
+  State, Pos:Real;
   scene: TScene;
 
 implementation
@@ -137,19 +138,23 @@ begin
   Stars := TStars.Create;
   Moon  := TMoon.Create;
 
-  SetLength(Scene, 6);
+  SetLength(Scene, 7);
   scene[0] := Stars;
   scene[1] := Moon;
   scene[2] := Drevo;
   scene[3] := Hill;
-  scene[4] := House;
-  scene[5] := Door;
+  scene[4] := SHuman;
+  scene[5] := House;
+  scene[6] := Door;
 
 
   time := 0;
   dSpeed:=deg2rad(1.5);
   dClose:=false;
   force := -2;
+
+  state:=0;
+  pos:=sHuman.Transform.pos.x;
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
@@ -157,15 +162,38 @@ const
   MAX_ANGLE = -135;
 begin
   // Update
+  state:=state+0.1;
+  pos:=pos+4;
+  if state > 3 then
+    state := 0;
+  if door.angle <= 0 then
+    dClose:=true;
   if not(dClose) then
     door.angle := door.angle - dSpeed
   else
     begin
-    if door.angle<= deg2rad(44) then
-     door.angle := door.angle + dSpeed;
+
+
+      if pos > 450 then
+      begin
+         if door.angle<= deg2rad(44) then
+            door.angle := door.angle + dSpeed;
+      end;
     end;
-  if door.angle <= 0 then
-    dClose:=true;
+
+    if state<1 then
+          sHuman.Interpolate(sHuman, sHuman1, state)
+      else
+      begin
+        if state < 2 then
+          sHuman.Interpolate(sHuman, sHuman2, state-1)
+        else
+          if state < 3 then
+            sHuman.Interpolate(sHuman, sHuman3, state-2);
+      end;
+
+    sHuman.Transform.pos.x:=Pos;
+    sHuman.Update;
 
     if door.angle>=deg2rad(45) then
     begin
@@ -210,7 +238,6 @@ begin
   drevo.Draw(PaintBox1.Canvas);
   hill.Draw(Canvas);
   House.Draw(PaintBox1.Canvas);
-
   door.Draw(PaintBox1.Canvas);}
 
   //ShowMessage('FUCK YOU');
@@ -219,8 +246,7 @@ begin
   begin
     Scene[I].Draw(Canvas);
   end;
-  sHuman.Draw(canvas);
+
 
 end;
-
 end.
