@@ -29,7 +29,7 @@ type
     Constructor Create;
           end;
    TStars = class(TAnimObject)
-    ArrayCoordinate: array [1 .. 150, 1 .. 2] of integer;
+    ArrayCoordinate: array [1 .. 300, 1 .. 2] of integer;
     procedure Draw(Canvas: Tcanvas);  override;
     Constructor Create;
            end;
@@ -43,9 +43,9 @@ implementation
 constructor Tdrevo.Create;
 const
   DEFAULT_X = 900;
-  DEFAULT_Y = 450;
+  DEFAULT_Y = 500;
 begin
-  Transform := TTransform.Create(TPos.Create(DEFAULT_X, DEFAULT_Y), deg2rad(0), 1);
+  Transform := TTransform.Create(TPos.Create(DEFAULT_X, DEFAULT_Y), deg2rad(0), 0.75);
 end;
 
 
@@ -53,6 +53,8 @@ procedure Tdrevo.Draw(Canvas: TCanvas);
 const
      TreeLenX=100;
      TreeLenY=175;
+     DEFAULT_X = 900;
+     DEFAULT_Y = 500;
      Height=40;
 procedure DrawSnow(Canvas: TCanvas);
 const
@@ -121,8 +123,8 @@ begin
     DrawSnow(Canvas);
       if y<0 then
       begin
-          x:=800;
-          y:=400;
+          x:=DEFAULT_X;
+          y:=DEFAULT_Y;
       end;
     end;
     end;
